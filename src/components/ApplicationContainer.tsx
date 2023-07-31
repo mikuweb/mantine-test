@@ -1,4 +1,11 @@
-import { AppShell, AppShellProps, Footer, Group, Text } from "@mantine/core";
+import {
+  AppShell,
+  AppShellProps,
+  Footer,
+  Group,
+  Header,
+  Text,
+} from "@mantine/core";
 import { FC, ReactNode } from "react";
 
 type props = AppShellProps & {
@@ -21,13 +28,24 @@ const ApplicationContainer: FC<props> = ({ children }) => {
         <Footer height={60} p="md">
           <Group position="apart" spacing="xl">
             <Text size="sm">
-              <span style={{ fontWeight: "bolder" }}>List Time: </span>0h 25m
+              <span style={{ fontWeight: "bolder" }}>🕰️ List Time: </span>0h 25m
             </Text>
             <Text size="sm">
-              <span style={{ fontWeight: "bolder" }}>End Time: </span>7:51pm
+              <span style={{ fontWeight: "bolder" }}>🎉 End Time: </span>7:51pm
             </Text>
           </Group>
         </Footer>
+      }
+      header={
+        <Header height={70} p="md">
+          <div
+            style={{ display: "flex", alignItems: "center", height: "100%" }}
+          >
+            <Text size="xl" weight="bolder">
+              Todo list
+            </Text>
+          </div>
+        </Header>
       }
     >
       {children}
