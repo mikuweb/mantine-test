@@ -1,11 +1,15 @@
+import Tasks from "@/components/Tasks";
+import { AppButton } from "@/components/ui/AppButton";
 import {
   ActionIcon,
   Button,
   Center,
   Flex,
   Group,
+  List,
   Stack,
   Text,
+  ThemeIcon,
   Title,
   UnstyledButton,
   useMantineTheme,
@@ -14,9 +18,15 @@ import { NextPage } from "next";
 import React, { FC } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { RiPlayListAddFill, RiPlayMiniFill } from "react-icons/ri";
+import { MdRadioButtonUnchecked, MdCheckCircleOutline } from "react-icons/md";
+import { Task } from "@/components/Task";
 
 const Home: NextPage = () => {
   const theme = useMantineTheme();
+
+  const handleAddTask = () => {
+    console.log("Add Task");
+  };
 
   return (
     <Stack mt="-20px">
@@ -64,10 +74,13 @@ const Home: NextPage = () => {
                 +5
               </ActionIcon>
             </Group>
-            {/* Add tack Button */}
-            <Group>
-              <Button mx="auto">Add</Button>
-            </Group>
+            <AppButton mx="auto" onClick={handleAddTask}>
+              Add
+            </AppButton>
+            <Tasks>
+              <Task isCompleted={true}>完了したタスク</Task>
+              <Task isCompleted={false}>未完了のタスク</Task>
+            </Tasks>
             {/* Buttons */}
             <Group>
               <UnstyledButton>🙈 Hide complete</UnstyledButton>
