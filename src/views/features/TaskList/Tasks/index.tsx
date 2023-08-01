@@ -17,41 +17,61 @@ const Tasks: FC = () => {
 
   const { classes } = useStyles();
 
-  const handleOpenModal = () => {
-    setOpenAddTaskModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenAddTaskModal(false);
-  };
-  console.log(inputValue);
-
-  const handleSubmitTask = () => {
+  const handleAddTask = () => {
     setTaskList((prev) => [
       ...prev,
-      { id: uuidv4(), text: inputValue, isComplete: false },
+      { id: uuidv4(), text: inputValue, isComplete: false, isEditing: false },
     ]);
     setInputValue("");
     setOpenAddTaskModal(false);
   };
 
+  const handleEdit = (taskId: string) => {
+    setTaskList((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId) {
+          return { ...task, isEditing: true };
+        } else {
+          return task;
+        }
+      })
+    );
+  };
+
+  const handleSubmitEdit = (taskId: string) => {
+    setTaskList((prev) =>
+      prev.map((task) => {
+        if (task.id === taskId) {
+          return { ...task, text: inputValue, isEditing: false };
+        } else {
+          return task;
+        }
+      })
+    );
+    setInputValue("");
+  };
+
   return (
     <>
-      <AppButton leftIcon={<RiAddFill />} mx="auto" onClick={handleOpenModal}>
+      <AppButton
+        leftIcon={<RiAddFill />}
+        mx="auto"
+        onClick={() => setOpenAddTaskModal(true)}
+      >
         タスクを追加
       </AppButton>
       <AppModal
         opened={openAddTaskModal}
         title="タスクを追加"
-        onClose={handleCloseModal}
+        onClose={() => setOpenAddTaskModal(false)}
       >
         <AppTextInput
-          name="add task"
+          name="Add task"
           value={inputValue}
           placeholder="タスクを入力..."
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <AppButton mx="auto" sx={{ width: "80px" }} onClick={handleSubmitTask}>
+        <AppButton mx="auto" sx={{ width: "80px" }} onClick={handleAddTask}>
           追加
         </AppButton>
       </AppModal>
@@ -61,9 +81,32 @@ const Tasks: FC = () => {
         size="sm"
         center
       >
-        {taskList.map((task) => (
-          <Task key={task.id} task={task.text} isCompleted={task.isComplete} />
-        ))}
+        {taskList.map((task) =>
+          task.isEditing ? (
+            <div className={classes.edit}>
+              <AppTextInput
+                name="Edit task"
+                value={inputValue}
+                placeholder={task.text}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <AppButton
+                mx="auto"
+                sx={{ padding: "5px 10px" }}
+                onClick={() => handleSubmitEdit(task.id)}
+              >
+                修正
+              </AppButton>
+            </div>
+          ) : (
+            <Task
+              key={task.id}
+              task={task.text}
+              isCompleted={task.isComplete}
+              handleEditBtn={() => handleEdit(task.id)}
+            />
+          )
+        )}
       </List>
     </>
   );

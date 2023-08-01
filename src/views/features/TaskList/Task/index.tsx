@@ -10,9 +10,10 @@ import { useStyles } from "./elements";
 type Props = {
   task: string;
   isCompleted: boolean;
+  handleEditBtn: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export const Task: FC<Props> = ({ task, isCompleted }) => {
+export const Task: FC<Props> = ({ task, isCompleted, handleEditBtn }) => {
   const { classes } = useStyles();
 
   return (
@@ -36,7 +37,13 @@ export const Task: FC<Props> = ({ task, isCompleted }) => {
           {task}
         </List.Item>
       </UnstyledButton>
-      <ActionIcon color="gray" size="xl" m="sm" variant="transparent">
+      <ActionIcon
+        color="gray"
+        size="xl"
+        m="sm"
+        variant="transparent"
+        onClick={handleEditBtn}
+      >
         <MdEdit size={20} />
       </ActionIcon>
     </div>

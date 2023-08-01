@@ -9,4 +9,8 @@ export const useStyles = createStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  edit: {
+    display: "flex",
+    flexDirection: "row",
+  },
 }));
