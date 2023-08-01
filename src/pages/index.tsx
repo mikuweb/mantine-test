@@ -1,5 +1,4 @@
 import Tasks from "@/views/features/TaskList/Tasks";
-import { AppButton } from "@/components/AppButton";
 import {
   ActionIcon,
   Center,
@@ -11,39 +10,16 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineSetting } from "react-icons/ai";
-import { RiPlayListAddFill, RiPlayMiniFill, RiAddFill } from "react-icons/ri";
-import { Task } from "@/views/features/TaskList/Task";
-import { AppModal } from "@/components/AppModal";
-import { AppTextInput } from "@/components/AppTextInput";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { taskListState } from "@/states/taskListState";
-import { v4 as uuidv4 } from "uuid";
+import { RiPlayListAddFill, RiPlayMiniFill } from "react-icons/ri";
 
 const Home: NextPage = () => {
   const theme = useMantineTheme();
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string>("");
-  const [taskList, setTaskList] = useRecoilState(taskListState);
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-  console.log(inputValue);
-
-  const handleSubmitTask = () => {
-    setTaskList((prev) => [
-      ...prev,
-      { id: uuidv4(), text: inputValue, isComplete: false },
-    ]);
-    setInputValue("");
-    setOpenModal(false);
-  };
+  // const editItemText = (itemId:string) => {
+  //  taskList.map(id =>  )
+  // };
 
   return (
     <Stack mt="-20px">
@@ -91,39 +67,7 @@ const Home: NextPage = () => {
                 +5
               </ActionIcon>
             </Group>
-            <AppButton
-              leftIcon={<RiAddFill />}
-              mx="auto"
-              onClick={handleOpenModal}
-            >
-              タスクを追加
-            </AppButton>
-            <AppModal
-              opened={openModal}
-              title="タスクを追加"
-              onClose={handleCloseModal}
-            >
-              <AppTextInput
-                name="add task"
-                value={inputValue}
-                placeholder="タスクを入力..."
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              <AppButton
-                mx="auto"
-                sx={{ width: "80px" }}
-                onClick={handleSubmitTask}
-              >
-                追加
-              </AppButton>
-            </AppModal>
-            <Tasks>
-              {taskList.map((task) => (
-                <Task key={task.id} isCompleted={task.isComplete}>
-                  {task.text}
-                </Task>
-              ))}
-            </Tasks>
+            <Tasks />
             {/* Buttons */}
             <Group>
               <UnstyledButton>🙈 Hide complete</UnstyledButton>

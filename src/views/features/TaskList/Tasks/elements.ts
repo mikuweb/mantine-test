@@ -5,7 +5,7 @@ export const useStyles = createStyles((theme) => ({
     width: "80%",
     maxWidth: "400px",
     margin: "0 auto",
-    padding: "40px 24px",
+    padding: "20px 24px",
     display: "flex",
     flexDirection: "column",
   },
