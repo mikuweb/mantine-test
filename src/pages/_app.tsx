@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import ApplicationContainer from "@/components/ApplicationContainer";
+import { RecoilRoot } from "recoil";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -24,9 +25,11 @@ export default function App(props: AppProps) {
           fontFamily: "Helvetica, Arial, sans-serif",
         }}
       >
-        <ApplicationContainer>
-          <Component {...pageProps} />
-        </ApplicationContainer>
+        <RecoilRoot>
+          <ApplicationContainer>
+            <Component {...pageProps} />
+          </ApplicationContainer>
+        </RecoilRoot>
       </MantineProvider>
     </>
   );

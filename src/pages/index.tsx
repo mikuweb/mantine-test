@@ -1,31 +1,48 @@
-import Tasks from "@/components/Tasks";
-import { AppButton } from "@/components/ui/AppButton";
+import Tasks from "@/views/features/TaskList/Tasks";
+import { AppButton } from "@/components/AppButton";
 import {
   ActionIcon,
-  Button,
   Center,
-  Flex,
   Group,
-  List,
   Stack,
   Text,
-  ThemeIcon,
   Title,
   UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
 import { NextPage } from "next";
-import React, { FC } from "react";
+import React, { useState } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
-import { RiPlayListAddFill, RiPlayMiniFill } from "react-icons/ri";
-import { MdRadioButtonUnchecked, MdCheckCircleOutline } from "react-icons/md";
-import { Task } from "@/components/Task";
+import { RiPlayListAddFill, RiPlayMiniFill, RiAddFill } from "react-icons/ri";
+import { Task } from "@/views/features/TaskList/Task";
+import { AppModal } from "@/components/AppModal";
+import { AppTextInput } from "@/components/AppTextInput";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { taskListState } from "@/states/taskListState";
+import { v4 as uuidv4 } from "uuid";
 
 const Home: NextPage = () => {
   const theme = useMantineTheme();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [taskList, setTaskList] = useRecoilState(taskListState);
 
-  const handleAddTask = () => {
-    console.log("Add Task");
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  console.log(inputValue);
+
+  const handleSubmitTask = () => {
+    setTaskList((prev) => [
+      ...prev,
+      { id: uuidv4(), text: inputValue, isComplete: false },
+    ]);
+    setInputValue("");
+    setOpenModal(false);
   };
 
   return (
@@ -74,12 +91,38 @@ const Home: NextPage = () => {
                 +5
               </ActionIcon>
             </Group>
-            <AppButton mx="auto" onClick={handleAddTask}>
-              Add
+            <AppButton
+              leftIcon={<RiAddFill />}
+              mx="auto"
+              onClick={handleOpenModal}
+            >
+              タスクを追加
             </AppButton>
+            <AppModal
+              opened={openModal}
+              title="タスクを追加"
+              onClose={handleCloseModal}
+            >
+              <AppTextInput
+                name="add task"
+                value={inputValue}
+                placeholder="タスクを入力..."
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <AppButton
+                mx="auto"
+                sx={{ width: "80px" }}
+                onClick={handleSubmitTask}
+              >
+                追加
+              </AppButton>
+            </AppModal>
             <Tasks>
-              <Task isCompleted={true}>完了したタスク</Task>
-              <Task isCompleted={false}>未完了のタスク</Task>
+              {taskList.map((task) => (
+                <Task key={task.id} isCompleted={task.isComplete}>
+                  {task.text}
+                </Task>
+              ))}
             </Tasks>
             {/* Buttons */}
             <Group>
