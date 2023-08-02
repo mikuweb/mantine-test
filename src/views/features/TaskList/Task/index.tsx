@@ -1,5 +1,5 @@
 import { ActionIcon, List, ThemeIcon, UnstyledButton } from "@mantine/core";
-import React, { FC, ReactNode } from "react";
+import React, { FC } from "react";
 import {
   MdCheckCircleOutline,
   MdRadioButtonUnchecked,
@@ -8,16 +8,17 @@ import {
 import { useStyles } from "./elements";
 
 type Props = {
-  children: ReactNode;
+  task: string;
   isCompleted: boolean;
+  handleEditBtn: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export const Task: FC<Props> = ({ children, isCompleted }) => {
+export const Task: FC<Props> = ({ task, isCompleted, handleEditBtn }) => {
   const { classes } = useStyles();
 
   return (
-    <UnstyledButton className={classes.container}>
-      <div className={classes.task}>
+    <div className={classes.container}>
+      <UnstyledButton className={classes.task}>
         <List.Item
           icon={
             <ThemeIcon
@@ -33,12 +34,18 @@ export const Task: FC<Props> = ({ children, isCompleted }) => {
             </ThemeIcon>
           }
         >
-          {children}
+          {task}
         </List.Item>
-        <ActionIcon color="gray" size="xl" m="sm" variant="transparent">
-          <MdEdit size={20} />
-        </ActionIcon>
-      </div>
-    </UnstyledButton>
+      </UnstyledButton>
+      <ActionIcon
+        color="gray"
+        size="xl"
+        m="sm"
+        variant="transparent"
+        onClick={handleEditBtn}
+      >
+        <MdEdit size={20} />
+      </ActionIcon>
+    </div>
   );
 };
