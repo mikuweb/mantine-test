@@ -1,25 +1,19 @@
-import Tasks from "@/views/features/TaskList/Tasks";
+import Tasks from "@/features/taskList/components/Tasks";
+import Timer from "@/features/timer/components/Timer";
 import {
   ActionIcon,
   Center,
   Group,
   Stack,
-  Text,
-  Title,
-  UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
 import { NextPage } from "next";
 import React from "react";
 import { AiOutlineSetting } from "react-icons/ai";
-import { RiPlayListAddFill, RiPlayMiniFill } from "react-icons/ri";
+import { RiPlayListAddFill } from "react-icons/ri";
 
 const Home: NextPage = () => {
   const theme = useMantineTheme();
-
-  // const editItemText = (itemId:string) => {
-  //  taskList.map(id =>  )
-  // };
 
   return (
     <Stack mt="-20px">
@@ -44,36 +38,8 @@ const Home: NextPage = () => {
         <Center>
           {/* Vertically */}
           <Stack mt="sm">
-            {/* Time */}
-            <Title
-              align="center"
-              order={1}
-              style={{
-                fontWeight: "900",
-                fontSize: "4rem",
-              }}
-            >
-              25:00
-            </Title>
-            <Text align="center">No task</Text>
-            <Group mt="sm" mx="auto" mb="md">
-              <ActionIcon color="dark" size="xl" variant="transparent">
-                -5
-              </ActionIcon>
-              <ActionIcon radius="xl" color="dark" size="xl" variant="filled">
-                <RiPlayMiniFill />
-              </ActionIcon>
-              <ActionIcon color="dark" size="xl" variant="transparent">
-                +5
-              </ActionIcon>
-            </Group>
+            <Timer />
             <Tasks />
-            {/* Buttons */}
-            <Group>
-              <UnstyledButton>🙈 Hide complete</UnstyledButton>
-              <UnstyledButton>🎉 Clear complete</UnstyledButton>
-              <UnstyledButton>🗑️ Clear all</UnstyledButton>
-            </Group>
           </Stack>
         </Center>
       </Stack>

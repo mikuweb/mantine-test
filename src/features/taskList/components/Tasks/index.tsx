@@ -1,14 +1,14 @@
-import { List } from "@mantine/core";
+import { Group, List, UnstyledButton } from "@mantine/core";
 import React, { FC, useState } from "react";
-import { useStyles } from "./elements";
 import { useRecoilState } from "recoil";
-import { taskListState } from "@/states/taskListState";
-import { Task } from "../Task";
+import { taskListState } from "@/stores/taskListState";
 import { v4 as uuidv4 } from "uuid";
 import { AppButton } from "@/components/AppButton";
 import { AppModal } from "@/components/AppModal";
 import { AppTextInput } from "@/components/AppTextInput";
 import { RiAddFill } from "react-icons/ri";
+import { Task } from "../Task";
+import { useStyles } from "./elements";
 
 const Tasks: FC = () => {
   const [taskList, setTaskList] = useRecoilState(taskListState);
@@ -108,6 +108,12 @@ const Tasks: FC = () => {
           )
         )}
       </List>
+      {/* Buttons */}
+      <Group>
+        <UnstyledButton>🙈 Hide complete</UnstyledButton>
+        <UnstyledButton>🎉 Clear complete</UnstyledButton>
+        <UnstyledButton>🗑️ Clear all</UnstyledButton>
+      </Group>
     </>
   );
 };
